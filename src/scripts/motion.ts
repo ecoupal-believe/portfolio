@@ -22,6 +22,15 @@ if (animate && 'IntersectionObserver' in window) {
   items.forEach((el) => el.classList.add('in'));
 }
 
+// Architecture diagrams: run the flowing-packet animation only while a diagram is on screen.
+const diagrams = document.querySelectorAll<SVGSVGElement>('svg.dia');
+if (animate && 'IntersectionObserver' in window) {
+  const dio = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('live', e.isIntersecting);
+  });
+  diagrams.forEach((d) => dio.observe(d));
+}
+
 // Count up the hero stats once.
 const counters = document.querySelectorAll<HTMLElement>('[data-count]');
 counters.forEach((el) => {

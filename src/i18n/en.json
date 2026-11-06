@@ -1,9 +1,10 @@
 {
   "meta": {
-    "title": "Eric Coupal — SRE / Cloud Architect",
-    "description": "Eric Coupal, SRE and cloud architect based in Lyon, France. 20+ years of experience: Kubernetes, Terraform, CI/CD, observability and microservices architectures."
+    "title": "Eric Coupal — Cloud & DevOps Architect",
+    "description": "Eric Coupal, cloud and DevOps architect based in Lyon, France. 20+ years of experience: Kubernetes, Terraform, CI/CD, observability and microservices architectures."
   },
   "nav": {
+    "missions": "Architecture",
     "projects": "Selected work",
     "stack": "Stack",
     "timeline": "Experience",
@@ -14,15 +15,20 @@
   },
   "hero": {
     "kicker": "Open to new opportunities · Lyon, France",
-    "role": "SRE / Cloud Architect",
+    "role": "Cloud & DevOps Architect",
     "pitch": "20+ years across software development and infrastructure. I design and evolve robust, secure, high-performance cloud platforms, automate everything that can be automated, and keep critical systems resilient.",
     "ctaContact": "Get in touch",
     "ctaCv": "Download CV",
     "stats": {
       "years": "years of experience",
+      "underTheHood": "under-the-hood diagrams",
       "projects": "featured projects",
       "techs": "technologies"
     }
+  },
+  "missions": {
+    "title": "Under the hood",
+    "intro": "Inside the systems I work on every day, from the Google Cloud platform down to the code. The diagrams show the main components, with no sensitive detail."
   },
   "projects": {
     "title": "Selected work",

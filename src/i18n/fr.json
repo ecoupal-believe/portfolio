@@ -1,9 +1,10 @@
 {
   "meta": {
-    "title": "Eric Coupal — SRE / Architecte cloud",
-    "description": "Eric Coupal, SRE et architecte cloud basé à Lyon. Plus de 20 ans d'expérience : Kubernetes, Terraform, CI/CD, observabilité et architectures microservices."
+    "title": "Eric Coupal — Architecte cloud & DevOps",
+    "description": "Eric Coupal, architecte cloud et DevOps basé à Lyon. Plus de 20 ans d'expérience : Kubernetes, Terraform, CI/CD, observabilité et architectures microservices."
   },
   "nav": {
+    "missions": "Architecture",
     "projects": "Réalisations",
     "stack": "Stack",
     "timeline": "Parcours",
@@ -14,15 +15,20 @@
   },
   "hero": {
     "kicker": "Disponible · Basé à Lyon",
-    "role": "SRE / Architecte cloud",
+    "role": "Architecte cloud & DevOps",
     "pitch": "Plus de 20 ans entre développement logiciel et infrastructure. Je conçois et fais évoluer des plateformes cloud robustes, sécurisées et performantes, j'automatise tout ce qui peut l'être, et je veille à la résilience des systèmes critiques.",
     "ctaContact": "Me contacter",
     "ctaCv": "Télécharger le CV",
     "stats": {
       "years": "ans d'expérience",
+      "underTheHood": "schémas sous le capot",
       "projects": "réalisations présentées",
       "techs": "technologies"
     }
+  },
+  "missions": {
+    "title": "Sous le capot",
+    "intro": "L'intérieur des systèmes sur lesquels je travaille au quotidien, de la plateforme Google Cloud jusqu'au code. Les schémas montrent les grands composants, sans détail sensible."
   },
   "projects": {
     "title": "Réalisations",

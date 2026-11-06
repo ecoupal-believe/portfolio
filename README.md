@@ -16,6 +16,7 @@ npm run preview   # serves dist/
 | What | Where |
 | --- | --- |
 | Name, email, optional LinkedIn/GitHub links, CV files, years of experience | `src/data/profile.ts` |
+| Featured missions + architecture diagrams (public: generic component types only) | `src/data/missions.ts` |
 | Projects (problem → what you did → outcome) | `src/data/projects.ts` |
 | Tech stack | `src/data/stack.ts` |
 | Experience / education | `src/data/timeline.ts` |

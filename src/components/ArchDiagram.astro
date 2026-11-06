@@ -1,0 +1,118 @@
+---
+import type { Diagram } from '../data/missions';
+import { pick, type Lang } from '../i18n/utils';
+
+interface Props {
+  diagram: Diagram;
+  lang: Lang;
+  /** Unique per page: used for the arrow marker id. */
+  uid: string;
+}
+const { diagram, lang, uid } = Astro.props;
+
+// Layout (SVG user units)
+const NODE_W = 184;
+const NODE_H = 44;
+const ROW_GAP = 24; // vertical space between nodes (room for a vertical arrow)
+const PAD = 14; // zone padding around nodes
+const COL_GAP = 52; // horizontal space between zones (room for an elbow arrow)
+const TOP = 24; // room for zone labels
+const ZONE_W = NODE_W + PAD * 2;
+const MAX_SUB = 24; // characters that fit on a node's second line
+const MAX_TITLE = 19;
+// Every diagram is drawn at this same scale (not stretched to the card), so text has the same size in all of them.
+// 0.92 lets the widest (4-column) diagram fit a desktop card; narrower screens scroll inside .scroll-x.
+const SCALE = 0.92;
+
+const zoneH = (n: number) => PAD * 2 + n * NODE_H + (n - 1) * ROW_GAP;
+const maxZoneH = Math.max(...diagram.columns.map((c) => zoneH(c.nodes.length)));
+const width = diagram.columns.length * ZONE_W + (diagram.columns.length - 1) * COL_GAP;
+const height = TOP + maxZoneH + 4;
+
+type Placed = { id: string; col: number; x: number; y: number; icon: string; title: string; sub: string; delay: number };
+const nodes = new Map<string, Placed>();
+let order = 0;
+const zones = diagram.columns.map((col, c) => {
+  const x = c * (ZONE_W + COL_GAP);
+  const h = zoneH(col.nodes.length);
+  const y = TOP + (maxZoneH - h) / 2;
+  col.nodes.forEach((n, i) => {
+    const title = pick(lang, n.title);
+    const sub = pick(lang, n.sub);
+    if (title.length > MAX_TITLE) throw new Error(`Diagram node "${n.id}" title too long (${title.length} > ${MAX_TITLE}): ${title}`);
+    if (sub.length > MAX_SUB) throw new Error(`Diagram node "${n.id}" subtitle too long (${sub.length} > ${MAX_SUB}): ${sub}`);
+    if (nodes.has(n.id)) throw new Error(`Duplicate diagram node id "${n.id}"`);
+    nodes.set(n.id, { id: n.id, col: c, x: x + PAD, y: y + PAD + i * (NODE_H + ROW_GAP), icon: n.icon, title, sub, delay: 150 + order++ * 70 });
+  });
+  return { x, y, h, label: pick(lang, col.zone), dashed: !!col.dashed };
+});
+
+// Edges: same column = straight vertical arrow; later column = horizontal elbow with rounded corners.
+const R = 6;
+const edges = diagram.edges.map(([fromId, toId]) => {
+  const a = nodes.get(fromId);
+  const b = nodes.get(toId);
+  if (!a || !b) throw new Error(`Diagram edge references unknown node: ${fromId} -> ${toId}`);
+  if (a.col === b.col) {
+    if (b.y <= a.y) throw new Error(`Vertical edge must point down: ${fromId} -> ${toId}`);
+    const x = a.x + NODE_W / 2;
+    return `M${x} ${a.y + NODE_H}V${b.y - 3}`;
+  }
+  if (b.col < a.col) throw new Error(`Edges must go left to right: ${fromId} -> ${toId}`);
+  const x1 = a.x + NODE_W;
+  const y1 = a.y + NODE_H / 2;
+  const x2 = b.x - 3;
+  const y2 = b.y + NODE_H / 2;
+  if (Math.abs(y2 - y1) < 1) return `M${x1} ${y1}H${x2}`;
+  const mx = (x1 + b.x) / 2;
+  const s = y2 > y1 ? 1 : -1;
+  const r = Math.min(R, Math.abs(y2 - y1) / 2);
+  return `M${x1} ${y1}H${mx - r}Q${mx} ${y1} ${mx} ${y1 + s * r}V${y2 - s * r}Q${mx} ${y2} ${mx + r} ${y2}H${x2}`;
+});
+
+const ariaLabel = `${pick(lang, diagram.label)} : ${[...nodes.values()].map((n) => n.title).join(', ')}`;
+const markerId = `dg-arrow-${uid}`;
+---
+
+<svg
+  class="dia"
+  viewBox={`0 0 ${width} ${height}`}
+  style={`width:${Math.round(width * SCALE)}px`}
+  role="img"
+  aria-label={ariaLabel}
+>
+  <defs>
+    <marker id={markerId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" class="dg-head" />
+    </marker>
+  </defs>
+
+  {
+    zones.map((z) => (
+      <g class:list={['dg-zone', { dashed: z.dashed }]}>
+        <rect x={z.x + 0.5} y={z.y + 0.5} width={ZONE_W - 1} height={z.h - 1} rx="14" />
+        <text x={z.x + 2} y={z.y - 9}>{z.label}</text>
+      </g>
+    ))
+  }
+
+  {
+    edges.map((d) => (
+      <g class="dg-edge">
+        <path class="eb" d={d} marker-end={`url(#${markerId})`} />
+        <path class="ef" d={d} />
+      </g>
+    ))
+  }
+
+  {
+    [...nodes.values()].map((n) => (
+      <g class="dn" style={`--d:${n.delay}ms`}>
+        <rect x={n.x} y={n.y} width={NODE_W} height={NODE_H} rx="10" />
+        <use href={`#dg-i-${n.icon}`} x={n.x + 12} y={n.y + 14} width="16" height="16" />
+        <text class="nt" x={n.x + 37} y={n.y + 19}>{n.title}</text>
+        <text class="ns" x={n.x + 37} y={n.y + 33}>{n.sub}</text>
+      </g>
+    ))
+  }
+</svg>
