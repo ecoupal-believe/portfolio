@@ -429,6 +429,68 @@ const platformMissions: Mission[] = [
       },
     },
   },
+  {
+    tag: same('FinOps'),
+    sector: gcp,
+    title: { fr: 'Réallocation des coûts cloud partagés', en: 'Shared cloud cost reallocation' },
+    text: {
+      fr: "Les exports de facturation GCP arrivent dans BigQuery, avec les labels GKE et des métriques d'usage. Chaque ressource porte des labels d'équipe et de produit, générés depuis le catalogue de services. Chaque nuit, un pipeline répartit le coût des services partagés entre les équipes qui les utilisent, selon des règles versionnées et des tables de poids quotidiennes, puis un contrôle vérifie que les totaux restent identiques avant que l'outil FinOps ne lise les données.",
+      en: 'GCP billing exports land in BigQuery, along with GKE labels and usage metrics. Every resource carries team and product labels generated from the service catalogue. Each night, a pipeline splits the cost of shared services across the teams that use them, based on versioned rules and daily weight tables, and a check confirms totals still match before the FinOps tool reads the data.',
+    },
+    chips: [{ icon: 'googlebigquery', label: 'BigQuery' }, 'GKE cost allocation', 'Costory', 'python', 'terraform', { icon: 'argo', label: 'Argo CD' }],
+    diagram: {
+      label: {
+        fr: "Réallocation des coûts : sources de facturation, règles et tables de poids, réallocation nocturne et contrôle, puis outil FinOps et vue par équipe",
+        en: 'Cost reallocation: billing sources, rules and weight tables, nightly reallocation and check, then FinOps tool and team view',
+      },
+      columns: [
+        {
+          zone: same('SOURCES'),
+          nodes: [
+            { id: 'billing', icon: 'db', title: { fr: 'Export facturation', en: 'Billing export' }, sub: { fr: 'standard et détaillé', en: 'standard & detailed' } },
+            { id: 'gkecost', icon: 'cluster', title: { fr: 'Allocation GKE', en: 'GKE cost allocation' }, sub: { fr: 'labels des pods', en: 'pod labels' } },
+            { id: 'usage', icon: 'gauge', title: { fr: "Métriques d'usage", en: 'Usage metrics' }, sub: { fr: 'temps de requêtes BDD', en: 'database query time' } },
+          ],
+        },
+        {
+          zone: { fr: 'RÈGLES', en: 'RULES' },
+          nodes: [
+            { id: 'rules', icon: 'code', title: { fr: 'Règles de partage', en: 'Allocation rules' }, sub: { fr: 'YAML · 5 stratégies', en: 'YAML · five strategies' } },
+            { id: 'weights', icon: 'registry', title: { fr: 'Tables de poids', en: 'Weight tables' }, sub: { fr: 'quotidiennes + catalogue', en: 'daily, from catalogue' } },
+          ],
+        },
+        {
+          zone: { fr: 'RÉALLOCATION', en: 'REALLOCATION' },
+          dashed: true,
+          nodes: [
+            { id: 'realloc', icon: 'sync', title: { fr: 'Réallocation', en: 'Reallocation' }, sub: { fr: 'nocturne, par équipe', en: 'nightly, per team' } },
+            { id: 'check', icon: 'check', title: { fr: 'Contrôle', en: 'Consistency check' }, sub: { fr: 'totaux identiques', en: 'totals must match' } },
+          ],
+        },
+        {
+          zone: { fr: 'CONSOMMATION', en: 'CONSUMPTION' },
+          nodes: [
+            { id: 'costory', icon: 'eye', title: same('Costory'), sub: { fr: 'dimensions virtuelles', en: 'virtual dimensions' } },
+            { id: 'teamview', icon: 'user', title: { fr: 'Vue par équipe', en: 'Team view' }, sub: { fr: 'équipe et produit', en: 'per team & product' } },
+          ],
+        },
+      ],
+      edges: [
+        ['billing', 'rules'],
+        ['gkecost', 'rules'],
+        ['usage', 'rules'],
+        ['rules', 'weights'],
+        ['weights', 'realloc'],
+        ['realloc', 'check'],
+        ['check', 'costory'],
+        ['check', 'teamview'],
+      ],
+      caption: {
+        fr: "Chaque coût partagé revient à l'équipe qui l'utilise.",
+        en: 'Every shared cost goes back to the team that uses it.',
+      },
+    },
+  },
 ];
 
 const codeMissions: Mission[] = [
