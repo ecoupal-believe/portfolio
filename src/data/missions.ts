@@ -12,7 +12,7 @@ export type DiagramIcon =
   | 'code' | 'check' | 'pipe' | 'eye' | 'play' | 'org' | 'box' | 'net'
   | 'container' | 'registry' | 'git' | 'sync' | 'cluster' | 'puzzle'
   | 'db' | 'msg' | 'bucket' | 'user' | 'shield' | 'lb' | 'proxy' | 'key'
-  | 'gauge' | 'pause' | 'clock' | 'bell';
+  | 'gauge' | 'pause' | 'clock' | 'bell' | 'cloud' | 'router' | 'link' | 'building';
 
 export interface DiagramNode {
   id: string;
@@ -205,7 +205,7 @@ const platformMissions: Mission[] = [
           zone: same('EDGE'),
           nodes: [
             { id: 'users', icon: 'user', title: { fr: 'Utilisateurs', en: 'Users' }, sub: { fr: 'trafic public', en: 'public traffic' } },
-            { id: 'waf', icon: 'shield', title: same('WAF · CDN'), sub: { fr: 'accès zero trust', en: 'zero-trust access' } },
+            { id: 'waf', icon: 'shield', title: same('WAF · CDN'), sub: { fr: 'tunnels zero trust', en: 'zero-trust tunnels' } },
           ],
         },
         {
@@ -236,6 +236,70 @@ const platformMissions: Mission[] = [
       caption: {
         fr: "Aucune base n'est exposée ; toutes les clés sont gérées et tournent automatiquement.",
         en: 'No database is exposed; every key is managed and rotated automatically.',
+      },
+    },
+  },
+  {
+    tag: { fr: 'Réseau', en: 'Network' },
+    sector: { fr: 'Distribution numérique · GCP + AWS', en: 'Digital distribution · GCP + AWS' },
+    title: { fr: 'Réseau hybride multi-cloud', en: 'Hybrid multi-cloud network' },
+    text: {
+      fr: "GCP et AWS partagent un même backbone WAN privé, qui relie aussi les bureaux et l'on-prem. GCP s'y raccorde par Partner Interconnect (attachements VLAN et Cloud Router/BGP sur deux régions, en actif/passif), AWS par Direct Connect, une Direct Connect Gateway et un Transit Gateway partagé à toute l'organisation. Des tables de routage par environnement, une isolation par routes blackhole et un DNS transféré dans les deux sens donnent des réseaux segmentés sous un seul espace de noms privé.",
+      en: 'GCP and AWS share one private WAN backbone that also links offices and on-prem sites. GCP connects through Partner Interconnect (VLAN attachments and Cloud Router/BGP in two regions, active/passive), AWS through Direct Connect, a Direct Connect Gateway and an organization-shared Transit Gateway. Per-environment route tables, blackhole isolation and DNS forwarding in both directions give segmented networks under a single private namespace.',
+    },
+    chips: [{ icon: 'googlecloud', label: 'Partner Interconnect' }, 'Cloud Router · BGP', 'AWS Direct Connect', 'Transit Gateway', 'Route 53 Resolver', 'terraform'],
+    diagram: {
+      label: {
+        fr: "Réseau hybride : VPC partagé GCP et Interconnect, backbone WAN avec bureaux et on-prem, bordure AWS Direct Connect, cœur Transit Gateway",
+        en: 'Hybrid network: GCP Shared VPC and Interconnect, WAN backbone with offices and on-prem, AWS Direct Connect edge, Transit Gateway core',
+      },
+      columns: [
+        {
+          zone: { fr: 'GCP · VPC PARTAGÉ', en: 'GCP · SHARED VPC' },
+          nodes: [
+            { id: 'hub', icon: 'cloud', title: { fr: 'Hub VPC partagé', en: 'Shared VPC hub' }, sub: { fr: 'spokes par env. appairés', en: 'peered env spokes' } },
+            { id: 'router', icon: 'router', title: same('Cloud Router'), sub: { fr: 'BGP · bypass Terraform', en: 'BGP · Terraform bypass' } },
+            { id: 'ic', icon: 'link', title: same('Interconnect'), sub: { fr: 'VLAN · actif/passif', en: 'VLAN · active/passive' } },
+          ],
+        },
+        {
+          zone: { fr: 'BACKBONE WAN', en: 'WAN BACKBONE' },
+          dashed: true,
+          nodes: [
+            { id: 'wan', icon: 'net', title: { fr: 'WAN privé', en: 'Private WAN' }, sub: { fr: 'routage any-to-any', en: 'any-to-any routing' } },
+            { id: 'sites', icon: 'building', title: { fr: 'Bureaux et on-prem', en: 'Offices & on-prem' }, sub: { fr: 'sites + DNS on-prem', en: 'sites + on-prem DNS' } },
+          ],
+        },
+        {
+          zone: { fr: 'BORDURE AWS', en: 'AWS EDGE' },
+          nodes: [
+            { id: 'dx', icon: 'link', title: same('Direct Connect'), sub: { fr: 'VIF Transit + BGP', en: 'Transit VIF + BGP' } },
+            { id: 'dxgw', icon: 'shield', title: { fr: 'Passerelle DX', en: 'DX Gateway' }, sub: { fr: 'filtre de préfixes', en: 'allowed-prefix filter' } },
+          ],
+        },
+        {
+          zone: { fr: 'CŒUR AWS', en: 'AWS CORE' },
+          nodes: [
+            { id: 'tgw', icon: 'lb', title: same('Transit Gateway'), sub: { fr: 'table de routage par env', en: 'route table per env' } },
+            { id: 'vpcs', icon: 'box', title: { fr: 'VPC applicatifs', en: 'Workload VPCs' }, sub: { fr: "partage RAM, toute l'org", en: 'RAM-shared, org-wide' } },
+            { id: 'r53', icon: 'msg', title: same('Route 53 Resolver'), sub: { fr: 'DNS hybride', en: 'hybrid DNS' } },
+          ],
+        },
+      ],
+      edges: [
+        ['hub', 'router'],
+        ['router', 'ic'],
+        ['ic', 'wan'],
+        ['wan', 'sites'],
+        ['wan', 'dx'],
+        ['dx', 'dxgw'],
+        ['dxgw', 'tgw'],
+        ['tgw', 'vpcs'],
+        ['vpcs', 'r53'],
+      ],
+      caption: {
+        fr: "Une seule bascule fait passer le trafic d'une région à l'autre ; l'astreinte n'est appelée que si toutes les régions tombent.",
+        en: 'One switch moves traffic from one region to the other; on-call is paged only when every region is down.',
       },
     },
   },

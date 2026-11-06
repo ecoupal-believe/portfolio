@@ -18,7 +18,7 @@ export const stack: StackGroup[] = [
   { label: { fr: 'Observabilité & FinOps', en: 'Observability & FinOps' }, items: ['datadog', 'Tsuga', 'grafana', 'prometheus', 'Costory', 'Apptio'] },
   { label: { fr: 'Données & streaming', en: 'Data & streaming' }, items: ['apachekafka', 'Debezium', 'postgresql', 'mysql', 'mongodb'] },
   { label: { fr: 'Langages & frameworks', en: 'Languages & frameworks' }, items: ['Java', 'springboot', 'python', 'go', 'linux'] },
-  { label: { fr: 'Sécurité & identité', en: 'Security & identity' }, items: ['OAuth2', { icon: 'openid', label: 'OIDC' }, { icon: 'jsonwebtokens', label: 'JWT' }, { icon: 'vault', label: 'HashiCorp Vault' }] },
+  { label: { fr: 'Sécurité & identité', en: 'Security & identity' }, items: ['OAuth2', { icon: 'openid', label: 'OIDC' }, { icon: 'jsonwebtokens', label: 'JWT' }, { icon: 'vault', label: 'HashiCorp Vault' }, 'cloudflare', 'Zero Trust · WAF'] },
   {
     label: { fr: 'Méthodes & IA', en: 'Methods & AI' },
     items: [{ label: { fr: 'Scrum Master certifié', en: 'Certified Scrum Master' } }, 'claudecode'],
