@@ -27,6 +27,8 @@ npm run preview   # serves dist/
 - `fr.json` is the reference. If `en.json` is missing a key, `npm run build` fails.
 - Tech names: a [simple-icons](https://simpleicons.org) slug (e.g. `kubernetes`) shows the logo; any other text (e.g. `Java`) shows as plain text.
 - Colours and fonts live in `src/styles/global.css` (`:root` tokens, with light and dark variants).
+- Link preview images (LinkedIn, Slack…): `public/og-fr.png` and `public/og-en.png`, 1200×630. They show your name, title and a few technologies, so re-render them if your title changes.
+- `sitemap-index.xml` and `robots.txt` are generated at build time from `site` and `base` in `astro.config.mjs`.
 
 ## Add a language
 

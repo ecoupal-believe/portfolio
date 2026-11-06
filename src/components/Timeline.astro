@@ -7,6 +7,12 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+// Roles that ended in 2015 or earlier are grouped in one collapsible row to keep the page short.
+const CUTOFF = 2015;
+const isEarly = (e: (typeof timeline)[number]) => !!e.end && Number.parseInt(e.end, 10) <= CUTOFF;
+const recent = timeline.filter((e) => !isEarly(e));
+const early = timeline.filter(isEarly);
+const earlyFrom = Math.min(...early.map((e) => Number.parseInt(e.start, 10)));
 ---
 
 <section class="section" id="timeline">
@@ -17,7 +23,7 @@ const t = useTranslations(lang);
     </div>
     <ol>
       {
-        timeline.map((e) => (
+        recent.map((e) => (
           <li class="rv">
             <span class="when">
               {e.start} — {e.end ?? t.timeline.present}
@@ -30,11 +36,92 @@ const t = useTranslations(lang);
           </li>
         ))
       }
+      {
+        early.length > 0 && (
+          <li class="more rv">
+            <details>
+              <summary>
+                <span class="when">
+                  {earlyFrom} — {CUTOFF}
+                </span>
+                <div>
+                  <h3>{t.timeline.earlierTitle}</h3>
+                  <p class="org">{early.map((e) => e.org).join(' · ')}</p>
+                  <p class="toggle">
+                    <span class="show">{t.timeline.showEarlier.replace('{n}', String(early.length))}</span>
+                    <span class="hide">{t.timeline.hideEarlier}</span>
+                    <span class="chev" aria-hidden="true">↓</span>
+                  </p>
+                </div>
+              </summary>
+              <ol>
+                {early.map((e) => (
+                  <li>
+                    <span class="when">
+                      {e.start} — {e.end}
+                    </span>
+                    <div>
+                      <h3>{pick(lang, e.role)}</h3>
+                      <p class="org">{e.org}</p>
+                      <p class="sum">{pick(lang, e.summary)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          </li>
+        )
+      }
     </ol>
   </div>
 </section>
 
 <style>
+  /* collapsible "before 2015" row */
+  li.more {
+    display: block;
+    padding-bottom: 0;
+  }
+  summary {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 8px 32px;
+    list-style: none;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .toggle {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .chev {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  details[open] .chev {
+    transform: rotate(180deg);
+  }
+  details .hide,
+  details[open] .show {
+    display: none;
+  }
+  details[open] .hide {
+    display: inline;
+  }
+  details > ol {
+    border-left: 0;
+    margin: 32px 0 0 -28px; /* nested rows line up with the outer timeline */
+  }
+  @media (max-width: 640px) {
+    summary {
+      grid-template-columns: 1fr;
+    }
+  }
   ol {
     list-style: none;
     margin: 0;

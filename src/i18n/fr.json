@@ -28,7 +28,9 @@
   },
   "missions": {
     "title": "Sous le capot",
-    "intro": "L'intérieur des systèmes sur lesquels je travaille au quotidien, de la plateforme Google Cloud jusqu'au code. Les schémas montrent les grands composants, sans détail sensible."
+    "intro": "L'intérieur des systèmes sur lesquels je travaille au quotidien, de la plateforme Google Cloud jusqu'au code. Les schémas montrent les grands composants, sans détail sensible.",
+    "showDiagram": "Voir le schéma",
+    "hideDiagram": "Masquer le schéma"
   },
   "projects": {
     "title": "Réalisations",
@@ -44,7 +46,10 @@
   },
   "timeline": {
     "title": "Parcours",
-    "present": "aujourd'hui"
+    "present": "aujourd'hui",
+    "earlierTitle": "Développement et architecture applicative",
+    "showEarlier": "Afficher les {n} postes",
+    "hideEarlier": "Masquer le détail"
   },
   "contact": {
     "title": "Travaillons ensemble",

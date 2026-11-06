@@ -194,7 +194,7 @@ const platformMissions: Mission[] = [
       fr: "Un Shared VPC avec des réseaux séparés par environnement, des clusters privés derrière des load balancers internes et des bases sans IP publique, joignables uniquement via Private Service Connect. Chiffrement par clés gérées (CMEK) et secrets centralisés dans Vault.",
       en: 'A Shared VPC with networks split by environment, private clusters behind internal load balancers, and databases with no public IP, reachable only through Private Service Connect. Customer-managed encryption keys (CMEK) and secrets centralised in Vault.',
     },
-    chips: ['Shared VPC', 'Private Service Connect', 'Cloud KMS', 'vault', 'Cloud SQL'],
+    chips: ['Shared VPC', 'Private Service Connect', 'Cloud KMS', { icon: 'vault', label: 'HashiCorp Vault' }, 'Cloud SQL'],
     diagram: {
       label: {
         fr: "Chemin d'une requête : edge, VPC privé de production, puis données et secrets",
@@ -358,6 +358,74 @@ const platformMissions: Mission[] = [
       caption: {
         fr: "Personne ne pousse dans le cluster : Flux tire depuis Git, et publier un tag semver suffit à promouvoir une version.",
         en: 'Nobody pushes to the cluster: Flux pulls from Git, and publishing a semver tag is all it takes to promote a release.',
+      },
+    },
+  },
+  {
+    tag: { fr: 'Observabilité', en: 'Observability' },
+    sector: { fr: 'Distribution numérique · multi-cloud', en: 'Digital distribution · multi-cloud' },
+    title: { fr: 'Observabilité double moteur : OpenTelemetry, Datadog et Tsuga', en: 'Dual-vendor observability: OpenTelemetry, Datadog and Tsuga' },
+    text: {
+      fr: "Un agrégateur Vector multi-région centralise logs, métriques et traces issus des agents Datadog et de collecteurs OpenTelemetry (Kubernetes, VM, logs cloud), les enrichit, contrôle leur format et les route vers Datadog et vers Tsuga en OTLP. Les traces APM sont dupliquées pour alimenter les deux plateformes pendant la migration de Datadog vers Tsuga. Moniteurs, SLO, index, archives et politiques de tags sont gérés en code, avec des alertes orientées résultat métier où un silence compte comme zéro.",
+      en: 'A multi-region Vector aggregator gathers logs, metrics and traces from Datadog agents and OpenTelemetry collectors (Kubernetes, VMs, cloud logs), enriches them, checks their format and routes them to Datadog and to Tsuga over OTLP. APM traces are mirrored so both platforms are fed during the Datadog-to-Tsuga migration. Monitors, SLOs, indexes, archives and tag policies are managed as code, with business-outcome alerts where silence counts as zero.',
+    },
+    chips: ['opentelemetry', 'Vector', 'datadog', 'Tsuga', 'Monitoring as code', 'Private Service Connect'],
+    diagram: {
+      label: {
+        fr: "Observabilité : sources, collecte Datadog et OpenTelemetry, agrégation Vector, puis Datadog, archive et Tsuga",
+        en: 'Observability: sources, Datadog and OpenTelemetry collection, Vector aggregation, then Datadog, archive and Tsuga',
+      },
+      columns: [
+        {
+          zone: same('SOURCES'),
+          nodes: [
+            { id: 'apps', icon: 'code', title: same('Applications'), sub: { fr: 'agent OTel · logs JSON', en: 'OTel agent · JSON logs' } },
+            { id: 'k8s', icon: 'cluster', title: same('Kubernetes'), sub: { fr: 'nœuds · pods · cluster', en: 'nodes · pods · cluster' } },
+            { id: 'vm', icon: 'box', title: { fr: 'VM et logs cloud', en: 'VMs & cloud logs' }, sub: { fr: 'OTel hôte · log sinks', en: 'host OTel · log sinks' } },
+          ],
+        },
+        {
+          zone: { fr: 'COLLECTE', en: 'COLLECTION' },
+          nodes: [
+            { id: 'ddagent', icon: 'eye', title: { fr: 'Agent Datadog', en: 'Datadog Agent' }, sub: { fr: 'APM · logs · métriques', en: 'APM · logs · metrics' } },
+            { id: 'otel', icon: 'pipe', title: same('OTel Collector'), sub: same('daemonset + cluster') },
+            { id: 'pubsub', icon: 'msg', title: { fr: 'Export Pub/Sub', en: 'Pub/Sub export' }, sub: same('sink → Pub/Sub → push') },
+          ],
+        },
+        {
+          zone: { fr: 'AGRÉGATION', en: 'AGGREGATION' },
+          dashed: true,
+          nodes: [
+            { id: 'vector', icon: 'lb', title: { fr: 'Agrégateur Vector', en: 'Vector aggregator' }, sub: { fr: 'HA multi-région · TLS', en: 'multi-region HA · TLS' } },
+            { id: 'route', icon: 'proxy', title: { fr: 'Enrichir et router', en: 'Enrich & route' }, sub: { fr: 'tags · conformité logs', en: 'tags · log compliance' } },
+            { id: 'psc', icon: 'link', title: { fr: 'Lien privé (PSC)', en: 'Private link (PSC)' }, sub: { fr: 'intake Tsuga privé', en: 'private Tsuga intake' } },
+          ],
+        },
+        {
+          zone: same('DESTINATIONS'),
+          nodes: [
+            { id: 'dd', icon: 'gauge', title: same('Datadog'), sub: { fr: 'moniteurs · SLO · APM', en: 'monitors · SLOs · APM' } },
+            { id: 'archive', icon: 'bucket', title: { fr: 'Archive froide', en: 'Cold archive' }, sub: { fr: 'stockage objet', en: 'object storage' } },
+            { id: 'tsuga', icon: 'bell', title: same('Tsuga'), sub: { fr: 'OTLP · en migration', en: 'OTLP · migrating' } },
+          ],
+        },
+      ],
+      edges: [
+        ['apps', 'ddagent'],
+        ['k8s', 'otel'],
+        ['vm', 'pubsub'],
+        ['ddagent', 'vector'],
+        ['otel', 'vector'],
+        ['vector', 'route'],
+        ['route', 'dd'],
+        ['route', 'archive'],
+        ['route', 'tsuga'],
+        ['pubsub', 'psc'],
+        ['psc', 'tsuga'],
+      ],
+      caption: {
+        fr: "Double envoi pendant la migration : chaque trace part vers Datadog et sa copie vers OpenTelemetry, par simple configuration des services.",
+        en: 'Dual-shipping during the migration: each trace goes to Datadog and a copy to OpenTelemetry, through service configuration only.',
       },
     },
   },

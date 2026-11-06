@@ -17,7 +17,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: { fr: 'Plateforme cloud et livraison continue', en: 'Cloud platform and continuous delivery' },
-    context: { fr: "Believe · Ingénieur plateforme · depuis 2022", en: 'Believe · Platform Engineer · 2022 – present' },
+    context: { fr: 'Believe · Ingénieur plateforme · 2022 – 2026', en: 'Believe · Platform Engineer · 2022 – 2026' },
     problem: {
       fr: "Des applications critiques à héberger, à livrer vite et à faire tourner de façon fiable en production.",
       en: 'Business-critical applications that must be hosted, shipped quickly and run reliably in production.',

@@ -78,6 +78,9 @@ const icons: Record<string, string> = {
                 </div>
                 <h4>{pick(lang, m.title)}</h4>
                 <p class="text">{pick(lang, m.text)}</p>
+                <button class="dg-btn" type="button" aria-expanded="false" data-show={t.missions.showDiagram} data-hide={t.missions.hideDiagram}>
+                  {t.missions.showDiagram}
+                </button>
                 <figure>
                   <div class="scroll-x">
                     <ArchDiagram diagram={m.diagram} lang={lang} uid={`${lang}-${gi}-${i}`} />
@@ -170,6 +173,26 @@ const icons: Record<string, string> = {
   }
   figure {
     margin: 24px 0 0;
+  }
+  /* Small screens: diagrams stay folded behind a button (only when JS runs, so they're never unreachable). */
+  .dg-btn {
+    display: none;
+    margin-top: 18px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: transparent;
+    color: var(--fg);
+    font: 600 14px var(--sans);
+    cursor: pointer;
+  }
+  @media (max-width: 640px) {
+    :global(.js) .dg-btn {
+      display: inline-flex;
+    }
+    :global(.js) .mcard:not(.open) figure {
+      display: none;
+    }
   }
   .scroll-x {
     overflow-x: auto;

@@ -28,7 +28,9 @@
   },
   "missions": {
     "title": "Under the hood",
-    "intro": "Inside the systems I work on every day, from the Google Cloud platform down to the code. The diagrams show the main components, with no sensitive detail."
+    "intro": "Inside the systems I work on every day, from the Google Cloud platform down to the code. The diagrams show the main components, with no sensitive detail.",
+    "showDiagram": "View diagram",
+    "hideDiagram": "Hide diagram"
   },
   "projects": {
     "title": "Selected work",
@@ -44,7 +46,10 @@
   },
   "timeline": {
     "title": "Experience",
-    "present": "present"
+    "present": "present",
+    "earlierTitle": "Software development & application architecture",
+    "showEarlier": "Show the {n} roles",
+    "hideEarlier": "Hide details"
   },
   "contact": {
     "title": "Let's work together",

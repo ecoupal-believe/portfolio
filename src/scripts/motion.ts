@@ -31,6 +31,17 @@ if (animate && 'IntersectionObserver' in window) {
   diagrams.forEach((d) => dio.observe(d));
 }
 
+// Small screens: show/hide a mission diagram.
+document.querySelectorAll<HTMLButtonElement>('.dg-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.mcard');
+    const open = !card?.classList.contains('open');
+    card?.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = (open ? btn.dataset.hide : btn.dataset.show) ?? '';
+  });
+});
+
 // Count up the hero stats once.
 const counters = document.querySelectorAll<HTMLElement>('[data-count]');
 counters.forEach((el) => {
