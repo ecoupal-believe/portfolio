@@ -10,6 +10,8 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // Astro's dev-only toolbar (audits, component inspector). Never shipped to the live site; off to keep `npm run dev` clean.
   devToolbar: { enabled: false },
+  // Inline the (small) stylesheets so nothing blocks the first render.
+  build: { inlineStylesheets: 'always' },
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'fr', locales: { fr: 'fr-FR', en: 'en-US' } },
