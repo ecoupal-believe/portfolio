@@ -33,8 +33,8 @@ export const timeline: TimelineEntry[] = [
     role: { fr: 'Lead developer', en: 'Lead Developer' },
     org: 'April',
     summary: {
-      fr: "Encadrement d'une équipe Scrum et choix des orientations techniques avec les architectes.",
-      en: 'Led a Scrum team and set the technical direction with architects and stakeholders.',
+      fr: "Encadrement d'une équipe Scrum, et définition des orientations techniques avec les architectes.",
+      en: 'Scrum team leadership, and technical direction set with architects and stakeholders.',
     },
   },
   {
@@ -60,8 +60,8 @@ export const timeline: TimelineEntry[] = [
     role: { fr: 'Architecte applicatif', en: 'Application Architect' },
     org: 'Banque Populaire',
     summary: {
-      fr: "Migration du legacy vers Kubernetes en microservices (CQRS, event sourcing), Kafka.",
-      en: 'Legacy migration to Kubernetes as microservices (CQRS, event sourcing), Kafka.',
+      fr: "Migration d'applications legacy vers Kubernetes en microservices (CQRS, event sourcing), avec Kafka.",
+      en: 'Migration of legacy applications to Kubernetes as microservices (CQRS, event sourcing), with Kafka.',
     },
   },
   {
@@ -87,8 +87,8 @@ export const timeline: TimelineEntry[] = [
     role: { fr: 'Architecte applicatif', en: 'Application Architect' },
     org: 'Banque de France',
     summary: {
-      fr: "Expertise et conseil auprès des équipes projets, analyses d'impact, études de performance.",
-      en: 'Expertise and advice for project teams, impact analyses, performance studies.',
+      fr: "Expertise et conseil auprès des équipes projets, analyses d'impact et études de performance.",
+      en: 'Expertise and advice for project teams, impact analysis and performance studies.',
     },
   },
   {

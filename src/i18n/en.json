@@ -11,7 +11,7 @@
     "contact": "Contact",
     "skip": "Skip to content",
     "langLabel": "Language",
-    "themeLabel": "Toggle theme"
+    "themeLabel": "Switch theme"
   },
   "hero": {
     "kicker": "Open to new opportunities · Lyon, France",
@@ -28,13 +28,13 @@
   },
   "missions": {
     "title": "Under the hood",
-    "intro": "Inside the systems I work on every day, from the Google Cloud platform down to the code. The diagrams show the main components, with no sensitive detail.",
+    "intro": "A look inside the systems I work on, from Google Cloud and AWS infrastructure down to the code. The diagrams show the main building blocks, with no sensitive detail.",
     "showDiagram": "View diagram",
     "hideDiagram": "Hide diagram"
   },
   "projects": {
     "title": "Selected work",
-    "intro": "A selection of engagements: the context, what I did, and what it delivered.",
+    "intro": "A selection of roles: the context, what I did and what it achieved.",
     "problem": "Context",
     "work": "What I did",
     "result": "Outcome",
@@ -53,7 +53,7 @@
   },
   "contact": {
     "title": "Let's work together",
-    "text": "A role, a question or a project? Message me on LinkedIn, I reply quickly.",
+    "text": "A role, a question or a project? Message me on LinkedIn. I reply quickly.",
     "footer": "Built with Astro, hosted on GitHub Pages.",
     "linkedin": "Message me on LinkedIn"
   },

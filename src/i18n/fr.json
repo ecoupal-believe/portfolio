@@ -14,7 +14,7 @@
     "themeLabel": "Changer de thème"
   },
   "hero": {
-    "kicker": "Disponible · Basé à Lyon",
+    "kicker": "Ouvert à de nouvelles opportunités · Lyon",
     "role": "Architecte cloud & DevOps",
     "pitch": "Plus de 20 ans entre développement logiciel et infrastructure. Je conçois et fais évoluer des plateformes cloud robustes, sécurisées et performantes, j'automatise tout ce qui peut l'être, et je veille à la résilience des systèmes critiques.",
     "ctaContact": "Me contacter",
@@ -28,13 +28,13 @@
   },
   "missions": {
     "title": "Sous le capot",
-    "intro": "L'intérieur des systèmes sur lesquels je travaille au quotidien, de la plateforme Google Cloud jusqu'au code. Les schémas montrent les grands composants, sans détail sensible.",
+    "intro": "Un aperçu des systèmes sur lesquels je travaille, de l'infrastructure Google Cloud et AWS jusqu'au code. Les schémas montrent les grands composants, sans détail sensible.",
     "showDiagram": "Voir le schéma",
     "hideDiagram": "Masquer le schéma"
   },
   "projects": {
     "title": "Réalisations",
-    "intro": "Une sélection de missions : le contexte, ce que j'ai fait, et ce que ça a apporté.",
+    "intro": "Une sélection de postes : le contexte, ce que j'ai fait et ce que cela a apporté.",
     "problem": "Contexte",
     "work": "Ce que j'ai fait",
     "result": "Résultat",

@@ -44,8 +44,8 @@ export const projects: Project[] = [
       en: 'Microservices and REST API architecture, technology choices, code reviews. Automated builds and deployments (GitLab CI, XL Release), standardised Docker and Kubernetes environments, automated testing.',
     },
     result: {
-      fr: "Des environnements homogènes, des déploiements automatisés et une équipe encadrée, documentée et montée en compétence.",
-      en: 'Consistent environments, automated deployments, and a team that was mentored, documented and upskilled.',
+      fr: 'Des environnements homogènes et des déploiements automatisés. Une équipe qui a gagné en autonomie, appuyée sur une documentation à jour.',
+      en: 'Consistent environments and automated deployments. A team that grew more autonomous, backed by up-to-date documentation.',
     },
     stack: ['gitlab', 'XL Release', 'docker', 'kubernetes'],
   },
@@ -53,8 +53,8 @@ export const projects: Project[] = [
     title: { fr: 'API Gateway et microservices', en: 'API Gateway and microservices' },
     context: { fr: 'Enedis · Tech lead · 2019 – 2020', en: 'Enedis · Tech Lead · 2019 – 2020' },
     problem: {
-      fr: "Rendre les applications plus résilientes et performantes, avec un point d'entrée unique pour le routage et la sécurité.",
-      en: 'Make applications more resilient and performant, with a single entry point for routing and security.',
+      fr: "Rendre les applications plus résilientes et plus rapides, avec un point d'entrée unique pour le routage et la sécurité.",
+      en: 'Make applications more resilient and faster, with a single entry point for routing and security.',
     },
     work: {
       fr: "Définition et implémentation d'architectures microservices modulaires. Mise en place d'une API Gateway (routage, authentification, flux de données) et de pipelines CI/CD avec tests intégrés.",
@@ -91,12 +91,12 @@ export const projects: Project[] = [
       en: 'Monolithic legacy applications that were hard to evolve and operate.',
     },
     work: {
-      fr: "Refonte en microservices (CQRS, event sourcing) et migration sur Kubernetes. Déploiement et configuration de Kafka pour les flux de données entre services.",
-      en: 'Re-architected them as microservices (CQRS, event sourcing) and migrated them to Kubernetes. Deployed and configured Kafka for data streaming between services.',
+      fr: "Refonte en microservices et migration sur Kubernetes. Déploiement et configuration de Kafka pour les flux de données entre services.",
+      en: 'Re-architected them as microservices and migrated them to Kubernetes. Deployed and configured Kafka for data streaming between services.',
     },
     result: {
-      fr: "Des services découplés qui communiquent de façon résiliente via Kafka.",
-      en: 'Decoupled services communicating resiliently through Kafka.',
+      fr: 'Des services découplés, qui communiquent de façon fiable via Kafka.',
+      en: 'Decoupled services that communicate reliably through Kafka.',
     },
     stack: ['kubernetes', 'apachekafka', 'CQRS', 'Event sourcing'],
   },
@@ -115,6 +115,6 @@ export const projects: Project[] = [
       fr: "Des flux de données IoT gérés efficacement sur une infrastructure scalable, dès les débuts de Kubernetes.",
       en: 'IoT data flows handled efficiently on scalable infrastructure, from the early days of Kubernetes.',
     },
-    stack: ['kubernetes', 'IoT', 'API'],
+    stack: ['kubernetes', 'IoT', 'apachekafka', 'API'],
   },
 ];

@@ -71,8 +71,8 @@ const platformMissions: Mission[] = [
       en: 'Infrastructure as code, GitOps style',
     },
     text: {
-      fr: "Un monorepo Terraform/Terragrunt : des stacks réutilisables d'un côté, des unités fines par environnement de l'autre. La CI se génère pour les seules unités modifiées, le plan tourne en lecture seule avec une identité sans clé, et l'apply reste manuel, après revue.",
-      en: 'A Terraform/Terragrunt monorepo: reusable stacks on one side, thin per-environment units on the other. CI is generated for the changed units only, the plan runs read-only with keyless identity, and apply stays manual, after review.',
+      fr: "Un monorepo Terraform/Terragrunt sépare les modules réutilisables de la configuration propre à chaque environnement. La CI ne s'exécute que pour ce qui a changé, le plan tourne en lecture seule avec une identité sans clé (OIDC), et l'apply reste manuel, après revue.",
+      en: "A Terraform/Terragrunt monorepo keeps reusable modules apart from each environment's configuration. CI runs only for what changed, the plan runs read-only with keyless identity (OIDC), and apply stays manual, after review.",
     },
     chips: ['terraform', 'Terragrunt', { icon: 'gitlab', label: 'GitLab CI' }, { icon: 'openid', label: 'OIDC' }, 'Workload Identity'],
     diagram: {
@@ -99,7 +99,7 @@ const platformMissions: Mission[] = [
         {
           zone: same('GOOGLE CLOUD'),
           nodes: [
-            { id: 'org', icon: 'org', title: { fr: 'Organisation', en: 'Organization' }, sub: { fr: 'dossiers prod/hors-prod', en: 'prod / non-prod folders' } },
+            { id: 'org', icon: 'org', title: { fr: 'Organisation', en: 'Organisation' }, sub: { fr: 'dossiers prod/hors-prod', en: 'prod & non-prod folders' } },
             { id: 'projects', icon: 'box', title: { fr: 'Projets', en: 'Projects' }, sub: same('project factory') },
             { id: 'vpc', icon: 'net', title: same('Shared VPC'), sub: { fr: 'hôte + projets par env', en: 'host + per-env projects' } },
           ],
@@ -115,8 +115,8 @@ const platformMissions: Mission[] = [
         ['projects', 'vpc'],
       ],
       caption: {
-        fr: 'Chaque changement suit plan → revue → apply ; la CI ne détient aucune clé statique.',
-        en: 'Every change goes plan → review → apply; CI never holds a static key.',
+        fr: 'Chaque changement suit plan → revue → apply, et la CI ne détient aucune clé statique.',
+        en: 'Every change goes plan → review → apply, and CI never holds a static key.',
       },
     },
   },
@@ -128,8 +128,8 @@ const platformMissions: Mission[] = [
       en: 'Multi-environment Kubernetes platform',
     },
     text: {
-      fr: "Des clusters GKE privés et régionaux par environnement, déployés depuis un hub Argo CD. Crossplane permet aux équipes de provisionner elles-mêmes leurs ressources cloud, dans les limites fixées par Workload Identity.",
-      en: 'Private, regional GKE clusters per environment, deployed from an Argo CD hub. Crossplane lets teams provision their own cloud resources, within the bounds set by Workload Identity.',
+      fr: 'Des clusters GKE privés et régionaux, un par environnement, tous déployés depuis un hub Argo CD central. Avec Crossplane, les équipes créent elles-mêmes leurs ressources cloud (bases de données, files de messages, buckets), dans les limites fixées par Workload Identity.',
+      en: 'Private, regional GKE clusters, one per environment, all deployed from a central Argo CD hub. With Crossplane, teams create their own cloud resources (databases, message queues, buckets) within the limits set by Workload Identity.',
     },
     chips: [{ icon: 'kubernetes', label: 'GKE' }, { icon: 'argo', label: 'Argo CD' }, 'helm', 'Crossplane', 'Artifact Registry', 'KEDA'],
     diagram: {
@@ -178,8 +178,8 @@ const platformMissions: Mission[] = [
         ['xp', 'gcs'],
       ],
       caption: {
-        fr: 'Un seul hub Argo CD déploie partout ; les applications demandent elles-mêmes leurs ressources.',
-        en: 'One Argo CD hub deploys everywhere; apps request their own cloud resources.',
+        fr: 'Un seul hub Argo CD déploie partout, et chaque application demande elle-même ses ressources.',
+        en: 'One Argo CD hub deploys everywhere, and each app requests its own cloud resources.',
       },
     },
   },
@@ -191,8 +191,8 @@ const platformMissions: Mission[] = [
       en: 'Private network, encrypted data',
     },
     text: {
-      fr: "Un Shared VPC avec des réseaux séparés par environnement, des clusters privés derrière des load balancers internes et des bases sans IP publique, joignables uniquement via Private Service Connect. Chiffrement par clés gérées (CMEK) et secrets centralisés dans Vault.",
-      en: 'A Shared VPC with networks split by environment, private clusters behind internal load balancers, and databases with no public IP, reachable only through Private Service Connect. Customer-managed encryption keys (CMEK) and secrets centralised in Vault.',
+      fr: "Un Shared VPC avec un réseau par environnement, des clusters privés derrière des load balancers internes, et des bases de données sans IP publique, accessibles uniquement via Private Service Connect. Les données sont chiffrées avec des clés gérées par l'entreprise (CMEK), et les secrets sont centralisés dans Vault.",
+      en: 'A Shared VPC with one network per environment, private clusters behind internal load balancers, and databases with no public IP, reachable only through Private Service Connect. Data is encrypted with customer-managed keys (CMEK), and secrets are centralised in Vault.',
     },
     chips: ['Shared VPC', 'Private Service Connect', 'Cloud KMS', { icon: 'vault', label: 'HashiCorp Vault' }, 'Cloud SQL'],
     diagram: {
@@ -234,8 +234,8 @@ const platformMissions: Mission[] = [
         ['gke', 'vault'],
       ],
       caption: {
-        fr: "Aucune base n'est exposée ; toutes les clés sont gérées et tournent automatiquement.",
-        en: 'No database is exposed; every key is managed and rotated automatically.',
+        fr: "Aucune base de données n'est exposée sur internet, et toutes les clés sont gérées et renouvelées automatiquement.",
+        en: 'No database is exposed to the internet, and every key is managed and rotated automatically.',
       },
     },
   },
@@ -244,8 +244,8 @@ const platformMissions: Mission[] = [
     sector: { fr: 'Distribution numérique · GCP + AWS', en: 'Digital distribution · GCP + AWS' },
     title: { fr: 'Réseau hybride multi-cloud', en: 'Hybrid multi-cloud network' },
     text: {
-      fr: "GCP et AWS partagent un même backbone WAN privé, qui relie aussi les bureaux et l'on-prem. GCP s'y raccorde par Partner Interconnect (attachements VLAN et Cloud Router/BGP sur deux régions, en actif/passif), AWS par Direct Connect, une Direct Connect Gateway et un Transit Gateway partagé à toute l'organisation. Des tables de routage par environnement, une isolation par routes blackhole et un DNS transféré dans les deux sens donnent des réseaux segmentés sous un seul espace de noms privé.",
-      en: 'GCP and AWS share one private WAN backbone that also links offices and on-prem sites. GCP connects through Partner Interconnect (VLAN attachments and Cloud Router/BGP in two regions, active/passive), AWS through Direct Connect, a Direct Connect Gateway and an organization-shared Transit Gateway. Per-environment route tables, blackhole isolation and DNS forwarding in both directions give segmented networks under a single private namespace.',
+      fr: "GCP et AWS sont reliés au même réseau WAN privé que les bureaux et les datacenters sur site. Côté GCP : Partner Interconnect et Cloud Router (BGP) sur deux régions, en actif/passif. Côté AWS : Direct Connect, une Direct Connect Gateway et un Transit Gateway partagé avec toute l'organisation. Chaque environnement a sa propre table de routage et reste isolé des autres, et le DNS est résolu dans les deux sens, sous un même espace de noms privé.",
+      en: 'GCP and AWS join the same private WAN as the offices and on-premises data centres. On GCP: Partner Interconnect and Cloud Router (BGP) in two regions, active/passive. On AWS: Direct Connect, a Direct Connect Gateway and a Transit Gateway shared across the organisation. Each environment has its own route table and stays isolated from the others, and DNS resolves both ways under one private namespace.',
     },
     chips: [{ icon: 'googlecloud', label: 'Partner Interconnect' }, 'Cloud Router · BGP', 'AWS Direct Connect', 'Transit Gateway', 'Route 53 Resolver', 'terraform'],
     diagram: {
@@ -257,8 +257,8 @@ const platformMissions: Mission[] = [
         {
           zone: { fr: 'GCP · VPC PARTAGÉ', en: 'GCP · SHARED VPC' },
           nodes: [
-            { id: 'hub', icon: 'cloud', title: { fr: 'Hub VPC partagé', en: 'Shared VPC hub' }, sub: { fr: 'spokes par env. appairés', en: 'peered env spokes' } },
-            { id: 'router', icon: 'router', title: same('Cloud Router'), sub: { fr: 'BGP · bypass Terraform', en: 'BGP · Terraform bypass' } },
+            { id: 'hub', icon: 'cloud', title: { fr: 'Hub VPC partagé', en: 'Shared VPC hub' }, sub: { fr: 'un VPC par env, appairé', en: 'one peered VPC per env' } },
+            { id: 'router', icon: 'router', title: same('Cloud Router'), sub: { fr: 'BGP · route de secours', en: 'BGP · fallback route' } },
             { id: 'ic', icon: 'link', title: same('Interconnect'), sub: { fr: 'VLAN · actif/passif', en: 'VLAN · active/passive' } },
           ],
         },
@@ -266,8 +266,8 @@ const platformMissions: Mission[] = [
           zone: { fr: 'BACKBONE WAN', en: 'WAN BACKBONE' },
           dashed: true,
           nodes: [
-            { id: 'wan', icon: 'net', title: { fr: 'WAN privé', en: 'Private WAN' }, sub: { fr: 'routage any-to-any', en: 'any-to-any routing' } },
-            { id: 'sites', icon: 'building', title: { fr: 'Bureaux et on-prem', en: 'Offices & on-prem' }, sub: { fr: 'sites + DNS on-prem', en: 'sites + on-prem DNS' } },
+            { id: 'wan', icon: 'net', title: { fr: 'WAN privé', en: 'Private WAN' }, sub: { fr: 'relie tous les sites', en: 'links every site' } },
+            { id: 'sites', icon: 'building', title: { fr: 'Bureaux et sites', en: 'Offices & sites' }, sub: { fr: 'DNS interne', en: 'internal DNS' } },
           ],
         },
         {
@@ -298,8 +298,8 @@ const platformMissions: Mission[] = [
         ['vpcs', 'r53'],
       ],
       caption: {
-        fr: "Une seule bascule fait passer le trafic d'une région à l'autre ; l'astreinte n'est appelée que si toutes les régions tombent.",
-        en: 'One switch moves traffic from one region to the other; on-call is paged only when every region is down.',
+        fr: "Une seule bascule fait passer le trafic d'une région à l'autre, et l'astreinte n'est appelée que si toutes les régions tombent.",
+        en: 'A single switch moves traffic from one region to the other, and on-call is paged only when every region is down.',
       },
     },
   },
@@ -308,8 +308,8 @@ const platformMissions: Mission[] = [
     sector: videoAws,
     title: { fr: 'GitOps en mode pull sur AWS EKS', en: 'Pull-based GitOps on AWS EKS' },
     text: {
-      fr: "Trois environnements EKS provisionnés avec Terraform (état S3/DynamoDB, rôle de déploiement inter-comptes, apply manuel), chacun amorcé avec Flux. L'automatisation d'images de Flux scrute le registre et recommite les nouveaux tags dans Git : builds de branche en dev, versions semver en recette et en production. Une vingtaine de services et autant de CronJobs, sur un pool de nœuds dédié et auto-scalé, lisent leurs secrets dans un Vault central via External Secrets et reçoivent des rôles IAM ciblés via IRSA.",
-      en: 'Three EKS environments provisioned with Terraform (S3/DynamoDB state, cross-account deployer role, manual apply), each bootstrapped with Flux. Flux image automation scans the registry and commits new tags back to Git: branch builds in dev, semver releases in staging and production. About twenty services and as many CronJobs, on a dedicated autoscaled node pool, read their secrets from a central Vault through External Secrets and get scoped IAM roles via IRSA.',
+      fr: "Trois environnements EKS créés avec Terraform (apply manuel, rôle de déploiement inter-comptes), chacun piloté par Flux. Flux surveille le registre d'images et écrit lui-même les nouveaux tags dans Git : la dernière build de branche en dev, la dernière version semver en recette et en production. Une vingtaine de services et autant de CronJobs lisent leurs secrets dans un Vault central via External Secrets, avec des droits AWS limités à chaque workload (IRSA).",
+      en: 'Three EKS environments built with Terraform (manual apply, cross-account deployer role), each managed by Flux. Flux watches the image registry and writes new tags back to Git itself: the latest branch build in dev, the latest semver release in staging and production. About twenty services and as many CronJobs read their secrets from a central Vault through External Secrets, with AWS permissions scoped to each workload (IRSA).',
     },
     chips: ['terraform', 'AWS EKS', 'flux', 'Kustomize', 'External Secrets', { icon: 'mongodb', label: 'MongoDB Atlas' }],
     diagram: {
@@ -326,14 +326,14 @@ const platformMissions: Mission[] = [
           zone: { fr: 'GITOPS PULL', en: 'PULL GITOPS' },
           nodes: [
             { id: 'policy', icon: 'sync', title: { fr: 'Image policy Flux', en: 'Flux image policy' }, sub: { fr: 'branche (dev) · semver', en: 'branch (dev) · semver' } },
-            { id: 'kz', icon: 'git', title: { fr: 'Templates Kustomize', en: 'Kustomize templates' }, sub: { fr: 'tag commité auto', en: 'auto-committed tag' } },
+            { id: 'kz', icon: 'git', title: { fr: 'Templates Kustomize', en: 'Kustomize templates' }, sub: { fr: 'tag écrit dans Git', en: 'tag written to Git' } },
           ],
         },
         {
           zone: { fr: 'CLUSTER EKS', en: 'EKS CLUSTER' },
           dashed: true,
           nodes: [
-            { id: 'gw', icon: 'lb', title: { fr: 'Passerelle API', en: 'API gateway' }, sub: { fr: 'clés et rôles par client', en: 'per-client keys, roles' } },
+            { id: 'gw', icon: 'lb', title: { fr: 'Passerelle API', en: 'API gateway' }, sub: { fr: 'clés et rôles par client', en: 'keys & roles per client' } },
             { id: 'wl', icon: 'cluster', title: { fr: 'Services et batchs', en: 'Services & batches' }, sub: { fr: 'pool CronJob dédié', en: 'dedicated CronJob pool' } },
           ],
         },
@@ -356,18 +356,18 @@ const platformMissions: Mission[] = [
         ['wl', 's3'],
       ],
       caption: {
-        fr: "Personne ne pousse dans le cluster : Flux tire depuis Git, et publier un tag semver suffit à promouvoir une version.",
-        en: 'Nobody pushes to the cluster: Flux pulls from Git, and publishing a semver tag is all it takes to promote a release.',
+        fr: 'Personne ne déploie à la main : Flux lit Git, et publier un tag semver suffit à promouvoir une version.',
+        en: 'Nobody deploys by hand: Flux reads from Git, and publishing a semver tag is all it takes to promote a release.',
       },
     },
   },
   {
     tag: { fr: 'Observabilité', en: 'Observability' },
     sector: { fr: 'Distribution numérique · multi-cloud', en: 'Digital distribution · multi-cloud' },
-    title: { fr: 'Observabilité double moteur : OpenTelemetry, Datadog et Tsuga', en: 'Dual-vendor observability: OpenTelemetry, Datadog and Tsuga' },
+    title: { fr: 'Observabilité : migration de Datadog vers Tsuga via OpenTelemetry', en: 'Observability: migrating from Datadog to Tsuga via OpenTelemetry' },
     text: {
-      fr: "Un agrégateur Vector multi-région centralise logs, métriques et traces issus des agents Datadog et de collecteurs OpenTelemetry (Kubernetes, VM, logs cloud), les enrichit, contrôle leur format et les route vers Datadog et vers Tsuga en OTLP. Les traces APM sont dupliquées pour alimenter les deux plateformes pendant la migration de Datadog vers Tsuga. Moniteurs, SLO, index, archives et politiques de tags sont gérés en code, avec des alertes orientées résultat métier où un silence compte comme zéro.",
-      en: 'A multi-region Vector aggregator gathers logs, metrics and traces from Datadog agents and OpenTelemetry collectors (Kubernetes, VMs, cloud logs), enriches them, checks their format and routes them to Datadog and to Tsuga over OTLP. APM traces are mirrored so both platforms are fed during the Datadog-to-Tsuga migration. Monitors, SLOs, indexes, archives and tag policies are managed as code, with business-outcome alerts where silence counts as zero.',
+      fr: 'Une migration progressive de Datadog vers Tsuga, sans perte de visibilité. Un agrégateur Vector réparti sur deux régions reçoit les logs, métriques et traces des agents Datadog et des collecteurs OpenTelemetry (Kubernetes, VM, logs cloud), les enrichit, vérifie leur format et les envoie aux deux plateformes. Moniteurs, SLO, index et archives sont gérés en code, avec des alertes sur le résultat métier.',
+      en: 'A gradual migration from Datadog to Tsuga, with no loss of visibility. A Vector aggregator spread over two regions receives logs, metrics and traces from Datadog agents and OpenTelemetry collectors (Kubernetes, VMs, cloud logs), enriches them, checks their format and sends them to both platforms. Monitors, SLOs, indexes and archives are managed as code, with alerts on business outcomes.',
     },
     chips: ['opentelemetry', 'Vector', 'datadog', 'Tsuga', 'Monitoring as code', 'Private Service Connect'],
     diagram: {
@@ -381,7 +381,7 @@ const platformMissions: Mission[] = [
           nodes: [
             { id: 'apps', icon: 'code', title: same('Applications'), sub: { fr: 'agent OTel · logs JSON', en: 'OTel agent · JSON logs' } },
             { id: 'k8s', icon: 'cluster', title: same('Kubernetes'), sub: { fr: 'nœuds · pods · cluster', en: 'nodes · pods · cluster' } },
-            { id: 'vm', icon: 'box', title: { fr: 'VM et logs cloud', en: 'VMs & cloud logs' }, sub: { fr: 'OTel hôte · log sinks', en: 'host OTel · log sinks' } },
+            { id: 'vm', icon: 'box', title: { fr: 'VM et logs cloud', en: 'VMs & cloud logs' }, sub: { fr: 'OTel sur VM · log sinks', en: 'host OTel · log sinks' } },
           ],
         },
         {
@@ -397,8 +397,8 @@ const platformMissions: Mission[] = [
           dashed: true,
           nodes: [
             { id: 'vector', icon: 'lb', title: { fr: 'Agrégateur Vector', en: 'Vector aggregator' }, sub: { fr: 'HA multi-région · TLS', en: 'multi-region HA · TLS' } },
-            { id: 'route', icon: 'proxy', title: { fr: 'Enrichir et router', en: 'Enrich & route' }, sub: { fr: 'tags · conformité logs', en: 'tags · log compliance' } },
-            { id: 'psc', icon: 'link', title: { fr: 'Lien privé (PSC)', en: 'Private link (PSC)' }, sub: { fr: 'intake Tsuga privé', en: 'private Tsuga intake' } },
+            { id: 'route', icon: 'proxy', title: { fr: 'Enrichir et router', en: 'Enrich & route' }, sub: { fr: 'tags · format des logs', en: 'tags · log format checks' } },
+            { id: 'psc', icon: 'link', title: { fr: 'Lien privé (PSC)', en: 'Private link (PSC)' }, sub: { fr: 'accès privé à Tsuga', en: 'private access to Tsuga' } },
           ],
         },
         {
@@ -424,8 +424,8 @@ const platformMissions: Mission[] = [
         ['psc', 'tsuga'],
       ],
       caption: {
-        fr: "Double envoi pendant la migration : chaque trace part vers Datadog et sa copie vers OpenTelemetry, par simple configuration des services.",
-        en: 'Dual-shipping during the migration: each trace goes to Datadog and a copy to OpenTelemetry, through service configuration only.',
+        fr: 'Pendant la migration, chaque trace part vers Datadog et une copie vers OpenTelemetry, sans modifier le code des services.',
+        en: 'During the migration, each trace goes to Datadog and a copy to OpenTelemetry, with no change to service code.',
       },
     },
   },
@@ -437,8 +437,8 @@ const codeMissions: Mission[] = [
     sector: deliveryJava,
     title: { fr: 'Pipeline de livraison event-sourcé', en: 'Event-sourced delivery pipeline' },
     text: {
-      fr: "J'ai bâti une plateforme de microservices Java réactifs qui prépare des contenus numériques et les livre à des plateformes partenaires. Un orchestrateur central valide chaque transition d'état et l'ajoute à un event store ; la capture de changements (CDC) la publie sur Kafka, sans double écriture, et un routeur de flux la distribue aux workers en préservant l'ordre de chaque livraison.",
-      en: 'I built a reactive Java microservices platform that packages digital content and delivers it to partner platforms. A central orchestrator validates every state transition and appends it to an event store; change data capture publishes it to Kafka with no dual write, and a stream router fans it out to workers while preserving each delivery’s order.',
+      fr: "Une plateforme de microservices Java réactifs qui prépare des contenus numériques et les livre aux plateformes partenaires. Un orchestrateur central valide chaque changement d'état et l'enregistre dans un event store. La capture de changements (CDC) le publie ensuite sur Kafka, ce qui évite toute double écriture, et un routeur le distribue aux workers en respectant l'ordre de chaque livraison.",
+      en: 'A reactive Java microservices platform that packages digital content and delivers it to partner platforms. A central orchestrator validates every state change and records it in an event store. Change data capture (CDC) then publishes it to Kafka, which avoids any dual write, and a router fans it out to workers while keeping each delivery in order.',
     },
     chips: ['Java', { icon: 'spring', label: 'Spring WebFlux' }, 'apachekafka', 'Debezium', 'Kafka Streams', 'mysql'],
     diagram: {
@@ -469,7 +469,7 @@ const codeMissions: Mission[] = [
         {
           zone: same('WORKERS'),
           nodes: [
-            { id: 'xml', icon: 'code', title: { fr: 'Générateur XML', en: 'XML generator' }, sub: { fr: 'messages standard', en: 'standard messages' } },
+            { id: 'xml', icon: 'code', title: { fr: 'Générateur XML', en: 'XML generator' }, sub: { fr: 'messages normalisés', en: 'standard XML messages' } },
             { id: 'batch', icon: 'box', title: { fr: 'Gestion des lots', en: 'Batch manager' }, sub: { fr: 'regroupe et clôture', en: 'groups and closes' } },
             { id: 'ship', icon: 'net', title: { fr: 'Envoi partenaires', en: 'Partner delivery' }, sub: same('SFTP · FTP · API · cloud') },
           ],
@@ -485,8 +485,8 @@ const codeMissions: Mission[] = [
         ['router', 'ship'],
       ],
       caption: {
-        fr: "L'insertion en base vaut publication : pas de double écriture, et chaque worker renvoie son statut à l'orchestrateur.",
-        en: 'The database insert is the publish: no dual write, and every worker reports its status back to the orchestrator.',
+        fr: "Écrire en base suffit à publier l'événement, et chaque worker renvoie son statut à l'orchestrateur.",
+        en: 'Writing to the database is the publish step, and every worker reports its status back to the orchestrator.',
       },
     },
   },
@@ -495,8 +495,8 @@ const codeMissions: Mission[] = [
     sector: deliveryJava,
     title: { fr: 'Livraison résiliente et auto-réparatrice', en: 'Resilient, self-healing delivery' },
     text: {
-      fr: "J'ai rendu l'étape de livraison résiliente face à des partenaires instables, sans perte ni doublon. Un registre d'offsets en base permet de reprendre exactement là où le consommateur s'était arrêté ; des garde-fous par partenaire (coupe-circuit, limite de débit à fenêtre glissante, pauses de partition comptées) freinent au lieu d'échouer, et chaque erreur est relancée selon sa nature. Des jobs nocturnes et des alertes sur le volume livré rattrapent le reste.",
-      en: 'I made the delivery stage resilient to unstable partners, with no loss and no duplicates. A database-backed offset ledger lets consumers resume exactly where they stopped; per-partner guards (circuit breaker, sliding-window rate limit, ref-counted partition pauses) push back instead of failing, and each error is retried according to its type. Nightly jobs and alerts on delivered volume catch the rest.',
+      fr: "Une livraison qui résiste aux partenaires instables, sans perte ni doublon. Un registre d'offsets en base permet de reprendre exactement là où le traitement s'était arrêté. Pour chaque partenaire, un coupe-circuit, une limite de débit et des pauses de consommation ralentissent le flux au lieu de le faire échouer, et chaque erreur est relancée selon sa nature. Des jobs nocturnes et des alertes sur le volume livré rattrapent le reste.",
+      en: 'Delivery that stays resilient to unstable partners, with no loss and no duplicates. A database-backed offset ledger lets processing resume exactly where it stopped. For each partner, a circuit breaker, a rate limit and consumer pauses slow the flow down instead of letting it fail, and each error is retried according to its type. Nightly jobs and alerts on delivered volume catch the rest.',
     },
     chips: [{ icon: 'apachekafka', label: 'Reactor Kafka' }, 'redis', 'Micrometer', 'Testcontainers', { icon: 'cucumber', label: 'Cucumber BDD' }],
     diagram: {
@@ -507,7 +507,7 @@ const codeMissions: Mission[] = [
       columns: [
         {
           zone: { fr: 'CONSOMMATION', en: 'INTAKE' },
-          nodes: [{ id: 'ledger', icon: 'registry', title: { fr: "Ledger d'offsets", en: 'Offset ledger' }, sub: { fr: 'reprise sans perte', en: 'lossless resume' } }],
+          nodes: [{ id: 'ledger', icon: 'registry', title: { fr: "Registre d'offsets", en: 'Offset ledger' }, sub: { fr: 'reprise sans perte', en: 'lossless resume' } }],
         },
         {
           zone: { fr: 'GARDE-FOUS', en: 'GUARDS' },
@@ -515,19 +515,19 @@ const codeMissions: Mission[] = [
           nodes: [
             { id: 'cb', icon: 'shield', title: { fr: 'Coupe-circuit', en: 'Circuit breaker' }, sub: { fr: 'par partenaire', en: 'per partner' } },
             { id: 'rl', icon: 'gauge', title: { fr: 'Limiteur de débit', en: 'Rate limiter' }, sub: { fr: 'fenêtre glissante', en: 'sliding window' } },
-            { id: 'pause', icon: 'pause', title: { fr: 'Pause de partition', en: 'Partition pause' }, sub: { fr: 'comptée par raison', en: 'ref-counted reasons' } },
+            { id: 'pause', icon: 'pause', title: { fr: 'Pause de partition', en: 'Partition pause' }, sub: { fr: 'compteur de raisons', en: 'ref-counted reasons' } },
           ],
         },
         {
           zone: { fr: 'EXÉCUTION', en: 'EXECUTION' },
-          nodes: [{ id: 'upload', icon: 'net', title: { fr: 'Upload partenaire', en: 'Partner upload' }, sub: { fr: 'pool de connexions', en: 'pooled connections' } }],
+          nodes: [{ id: 'upload', icon: 'net', title: { fr: 'Envoi partenaire', en: 'Partner upload' }, sub: { fr: 'pool de connexions', en: 'pooled connections' } }],
         },
         {
           zone: { fr: 'REPRISE', en: 'RECOVERY' },
           nodes: [
-            { id: 'nightly', icon: 'clock', title: { fr: 'Filets nocturnes', en: 'Nightly safety nets' }, sub: { fr: 'relance des bloqués', en: 're-arm stuck items' } },
-            { id: 'retry', icon: 'sync', title: { fr: 'Arbitre de retry', en: 'Retry arbiter' }, sub: { fr: 'politique par erreur', en: 'policy per error type' } },
-            { id: 'alert', icon: 'bell', title: { fr: 'Alerte métier', en: 'Outcome alerting' }, sub: { fr: 'volume livré, pas CPU', en: 'throughput, not CPU' } },
+            { id: 'nightly', icon: 'clock', title: { fr: 'Jobs nocturnes', en: 'Nightly jobs' }, sub: { fr: 'relance des bloqués', en: 're-arm stuck items' } },
+            { id: 'retry', icon: 'sync', title: { fr: 'Relances', en: 'Retry policy' }, sub: { fr: "selon le type d'erreur", en: 'per error type' } },
+            { id: 'alert', icon: 'bell', title: { fr: 'Alerte métier', en: 'Business alerting' }, sub: { fr: 'volume livré, pas CPU', en: 'throughput, not CPU' } },
           ],
         },
       ],
@@ -541,8 +541,8 @@ const codeMissions: Mission[] = [
         ['nightly', 'retry'],
       ],
       caption: {
-        fr: "Au plafond, le message est retenu sans commit d'offset : jamais perdu, jamais envoyé deux fois.",
-        en: 'At the hard limit the message is held without committing its offset: never lost, never sent twice.',
+        fr: 'À la limite de débit, le message attend sans que son offset soit validé : jamais perdu, jamais envoyé deux fois.',
+        en: 'At the rate limit, the message waits without its offset being committed: never lost, never sent twice.',
       },
     },
   },
@@ -551,8 +551,8 @@ const codeMissions: Mission[] = [
     sector: videoJava,
     title: { fr: 'Microservices CQRS event-sourcés', en: 'Event-sourced CQRS microservices' },
     text: {
-      fr: "J'ai conçu un socle d'event sourcing partagé, réutilisé par une trentaine de services Spring Boot : agrégats versionnés avec verrouillage optimiste, event store entièrement audité avec reconstruction à une date donnée, et compacteur planifié qui condense l'historique en snapshots. Les écritures passent par des commandes Kafka, les lectures par des subgraphs GraphQL fédérés.",
-      en: 'I designed a shared event-sourcing core reused by about thirty Spring Boot services: versioned aggregates with optimistic locking, a fully audited event store with point-in-time rebuild, and a scheduled compactor that folds history into snapshots. Writes go through Kafka commands, reads through federated GraphQL subgraphs.',
+      fr: "Un socle d'event sourcing partagé, utilisé par une trentaine de services Spring Boot : agrégats versionnés avec verrouillage optimiste, event store audité qui permet de reconstruire l'état à n'importe quelle date, et compactage planifié de l'historique en snapshots. Les écritures passent par des commandes Kafka, les lectures par une API GraphQL fédérée.",
+      en: 'A shared event-sourcing core used by about thirty Spring Boot services: versioned aggregates with optimistic locking, an audited event store that can rebuild state as of any date, and scheduled compaction of history into snapshots. Writes go through Kafka commands, reads through a federated GraphQL API.',
     },
     chips: ['Java', 'springboot', 'apachekafka', 'mongodb', { icon: 'graphql', label: 'GraphQL Federation' }, 'ShedLock'],
     diagram: {
@@ -572,7 +572,7 @@ const codeMissions: Mission[] = [
           zone: { fr: 'CÔTÉ ÉCRITURE', en: 'WRITE SIDE' },
           dashed: true,
           nodes: [
-            { id: 'cmd', icon: 'msg', title: { fr: 'Handler commandes', en: 'Command handler' }, sub: { fr: 'commandes Kafka', en: 'Kafka commands' } },
+            { id: 'cmd', icon: 'msg', title: { fr: 'Gestion commandes', en: 'Command handler' }, sub: { fr: 'commandes Kafka', en: 'Kafka commands' } },
             { id: 'agg', icon: 'box', title: { fr: 'Agrégat', en: 'Aggregate root' }, sub: { fr: 'versionnage optimiste', en: 'optimistic versioning' } },
           ],
         },
@@ -587,7 +587,7 @@ const codeMissions: Mission[] = [
           zone: { fr: 'CÔTÉ LECTURE', en: 'READ SIDE' },
           nodes: [
             { id: 'events', icon: 'msg', title: { fr: 'Événements métier', en: 'Domain events' }, sub: same('Kafka · JSON Merge Patch') },
-            { id: 'query', icon: 'eye', title: { fr: 'Subgraphs lecture', en: 'Query subgraphs' }, sub: { fr: 'GraphQL fédéré', en: 'federated GraphQL' } },
+            { id: 'query', icon: 'eye', title: { fr: 'Lecture GraphQL', en: 'Query subgraphs' }, sub: { fr: 'subgraphs fédérés', en: 'federated GraphQL' } },
           ],
         },
       ],
@@ -601,7 +601,7 @@ const codeMissions: Mission[] = [
         ['es', 'query'],
       ],
       caption: {
-        fr: "Chaque événement porte son ascendance (corrélation, source, auteur) : l'historique se rejoue et s'audite de bout en bout.",
+        fr: "Chaque événement garde sa provenance (corrélation, source, auteur) : l'historique se rejoue et s'audite de bout en bout.",
         en: 'Every event carries its lineage (correlation, source, author): history can be replayed and audited end to end.',
       },
     },
@@ -611,12 +611,12 @@ const codeMissions: Mission[] = [
 export const missionGroups: MissionGroup[] = [
   {
     label: { fr: 'Côté plateforme', en: 'Platform side' },
-    intro: { fr: 'Une infrastructure Google Cloud multi-environnements.', en: 'A multi-environment Google Cloud infrastructure.' },
+    intro: { fr: 'Infrastructure cloud, réseau et observabilité, sur Google Cloud et AWS.', en: 'Cloud infrastructure, networking and observability across Google Cloud and AWS.' },
     missions: platformMissions,
   },
   {
     label: { fr: 'Côté code', en: 'Code side' },
-    intro: { fr: 'Des microservices Java orientés événements, du flux de livraison au modèle de données.', en: 'Event-driven Java microservices, from delivery flow to data model.' },
+    intro: { fr: 'Des microservices Java orientés événements : flux de livraison, résilience et modèle de données.', en: 'Event-driven Java microservices: delivery flow, resilience and data model.' },
     missions: codeMissions,
   },
 ];
