@@ -2,10 +2,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// GitHub Pages project site: https://ecoupal-believe.github.io/portfolio/
+// GitHub Pages project site: https://eric-coupal.github.io/portfolio/
 // With a custom domain (public/CNAME), set `site` to that domain and remove `base`.
 export default defineConfig({
-  site: 'https://ecoupal-believe.github.io',
+  site: 'https://eric-coupal.github.io',
   base: '/portfolio',
   trailingSlash: 'ignore',
   // Astro's dev-only toolbar (audits, component inspector). Never shipped to the live site; off to keep `npm run dev` clean.
