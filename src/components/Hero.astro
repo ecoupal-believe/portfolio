@@ -2,7 +2,7 @@
 import { useTranslations, type Lang } from '../i18n/utils';
 import { profile } from '../data/profile';
 import { projects } from '../data/projects';
-import { stack } from '../data/stack';
+import { stack, resolveItem } from '../data/stack';
 import { asset } from '../lib/url';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const cv = profile.cv[lang];
-const techCount = new Set(stack.flatMap((g) => g.items)).size;
+const techCount = new Set(stack.flatMap((g) => g.items.map((i) => resolveItem(i, lang).label ?? resolveItem(i, lang).name))).size;
 const stats = [
   { n: profile.yearsOfExperience, label: t.hero.stats.years, suffix: '+' },
   { n: projects.length, label: t.hero.stats.projects },

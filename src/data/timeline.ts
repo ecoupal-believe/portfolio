@@ -11,7 +11,7 @@ export interface TimelineEntry {
 // From the CV, most recent first.
 export const timeline: TimelineEntry[] = [
   {
-    start: '2022',
+    start: '2022', end: '2026',
     role: { fr: 'Ingénieur plateforme', en: 'Platform Engineer' },
     org: 'Believe',
     summary: {
@@ -126,17 +126,5 @@ export const timeline: TimelineEntry[] = [
       fr: "Solutions de gestion des clients particuliers et entreprises.",
       en: 'Retail and business client management solutions.',
     },
-  },
-  {
-    start: '2003', end: '2004',
-    role: { fr: 'AEC en programmation', en: 'AEC in Computer Programming' },
-    org: 'Collège de Bois-de-Boulogne',
-    summary: { fr: 'Formation', en: 'Education' },
-  },
-  {
-    start: '1999', end: '2001',
-    role: { fr: 'Formation en informatique', en: 'Computer Science studies' },
-    org: 'CEGEP Régional Lanaudière',
-    summary: { fr: 'Formation', en: 'Education' },
   },
 ];

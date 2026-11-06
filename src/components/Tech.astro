@@ -2,9 +2,12 @@
 import { getIcon, techLabel } from '../lib/icons';
 
 interface Props {
+  /** simple-icons slug or plain name. */
   name: string;
+  /** Overrides the displayed text (default: the icon's title, or the name). */
+  label?: string;
 }
-const { name } = Astro.props;
+const { name, label } = Astro.props;
 const icon = getIcon(name);
 ---
 
@@ -14,5 +17,5 @@ const icon = getIcon(name);
       <path d={icon.path} />
     </svg>
   )}
-  {techLabel(name)}
+  {label ?? techLabel(name)}
 </span>
