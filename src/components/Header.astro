@@ -1,0 +1,148 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import LangSwitch from './LangSwitch.astro';
+import { useTranslations, type Lang } from '../i18n/utils';
+import { profile } from '../data/profile';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const initials = profile.name
+  .split(' ')
+  .map((w) => w[0])
+  .join('');
+const links = [
+  { href: '#projects', label: t.nav.projects },
+  { href: '#stack', label: t.nav.stack },
+  { href: '#timeline', label: t.nav.timeline },
+  { href: '#contact', label: t.nav.contact },
+];
+---
+
+<a class="skip" href="#main">{t.nav.skip}</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href={getRelativeLocaleUrl(lang)} aria-label={profile.name}>
+      <span class="mono" aria-hidden="true">{initials}</span>
+      <span class="name">{profile.name}</span>
+    </a>
+    <nav class="links">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="tools">
+      <LangSwitch lang={lang} label={t.nav.langLabel} />
+      <button class="theme" type="button" data-theme-toggle aria-label={t.nav.themeLabel} title={t.nav.themeLabel}>
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8" /></svg>
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 64px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--display);
+    font-weight: 600;
+  }
+  .mono {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: var(--fg);
+    color: var(--bg);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .links {
+    display: flex;
+    gap: 22px;
+    margin-left: auto;
+  }
+  .links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14.5px;
+    transition: color 0.15s;
+  }
+  .links a:hover {
+    color: var(--fg);
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--fg);
+    cursor: pointer;
+  }
+  .theme svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+  /* Show the icon of the theme you'd switch to. */
+  .sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .sun {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .sun {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .moon {
+      display: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .links {
+      display: none;
+    }
+    .tools {
+      margin-left: auto;
+    }
+  }
+  @media (max-width: 380px) {
+    .name {
+      display: none;
+    }
+  }
+</style>

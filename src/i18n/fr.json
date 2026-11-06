@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Eric Coupal — SRE / Architecte cloud",
+    "description": "Eric Coupal, SRE et architecte cloud basé à Lyon. Plus de 20 ans d'expérience : Kubernetes, Terraform, CI/CD, observabilité et architectures microservices."
+  },
+  "nav": {
+    "projects": "Réalisations",
+    "stack": "Stack",
+    "timeline": "Parcours",
+    "contact": "Contact",
+    "skip": "Aller au contenu",
+    "langLabel": "Langue",
+    "themeLabel": "Changer de thème"
+  },
+  "hero": {
+    "kicker": "Disponible · Basé à Lyon",
+    "role": "SRE / Architecte cloud",
+    "pitch": "Plus de 20 ans entre développement logiciel et infrastructure. Je conçois et fais évoluer des plateformes cloud robustes, sécurisées et performantes, j'automatise tout ce qui peut l'être, et je veille à la résilience des systèmes critiques.",
+    "ctaContact": "Me contacter",
+    "ctaCv": "Télécharger le CV",
+    "stats": {
+      "years": "ans d'expérience",
+      "projects": "réalisations présentées",
+      "techs": "technologies"
+    }
+  },
+  "projects": {
+    "title": "Réalisations",
+    "intro": "Une sélection de missions : le contexte, ce que j'ai fait, et ce que ça a apporté.",
+    "problem": "Contexte",
+    "work": "Ce que j'ai fait",
+    "result": "Résultat",
+    "link": "Voir le projet"
+  },
+  "stack": {
+    "title": "Stack technique",
+    "intro": "Les outils avec lesquels je construis et exploite des plateformes."
+  },
+  "timeline": {
+    "title": "Parcours",
+    "present": "aujourd'hui"
+  },
+  "contact": {
+    "title": "Travaillons ensemble",
+    "text": "Un poste, une question ou un projet ? Écrivez-moi sur LinkedIn, je réponds rapidement.",
+    "footer": "Construit avec Astro, hébergé sur GitHub Pages.",
+    "linkedin": "Me contacter sur LinkedIn"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "Cette page n'existe pas ou a été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

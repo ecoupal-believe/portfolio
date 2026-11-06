@@ -43,3 +43,9 @@ terraform.tfstate.backup
 .envrc
 
 modules/**/.terraform.lock.hcl
+
+### Astro / Node ###
+node_modules/
+.astro/
+dist/
+.DS_Store

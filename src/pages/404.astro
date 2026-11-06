@@ -1,0 +1,47 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import { useTranslations } from '../i18n/utils';
+
+// One static 404 for the whole site: shown in both languages.
+const fr = useTranslations('fr');
+const en = useTranslations('en');
+---
+
+<Base title={`404 — ${fr.notFound.title}`}>
+  <main id="main" class="wrap nf">
+    <p class="eyebrow">404</p>
+    <h1>{fr.notFound.title}</h1>
+    <p>{fr.notFound.text}</p>
+    <a class="btn btn-primary" href={getRelativeLocaleUrl('fr')}>{fr.notFound.back}</a>
+    <hr />
+    <h2 lang="en">{en.notFound.title}</h2>
+    <p lang="en">{en.notFound.text}</p>
+    <a class="btn" lang="en" href={getRelativeLocaleUrl('en')}>{en.notFound.back}</a>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    padding-top: 18vh;
+    padding-bottom: 10vh;
+  }
+  h1 {
+    font-size: clamp(36px, 7vw, 64px);
+  }
+  h2 {
+    font-size: 26px;
+  }
+  p {
+    color: var(--muted);
+  }
+  hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 24px 0 8px;
+  }
+</style>

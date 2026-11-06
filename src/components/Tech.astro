@@ -1,0 +1,18 @@
+---
+import { getIcon, techLabel } from '../lib/icons';
+
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+const icon = getIcon(name);
+---
+
+<span class="chip">
+  {icon && (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={icon.path} />
+    </svg>
+  )}
+  {techLabel(name)}
+</span>

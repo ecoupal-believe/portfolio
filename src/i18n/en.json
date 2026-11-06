@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Eric Coupal — SRE / Cloud Architect",
+    "description": "Eric Coupal, SRE and cloud architect based in Lyon, France. 20+ years of experience: Kubernetes, Terraform, CI/CD, observability and microservices architectures."
+  },
+  "nav": {
+    "projects": "Selected work",
+    "stack": "Stack",
+    "timeline": "Experience",
+    "contact": "Contact",
+    "skip": "Skip to content",
+    "langLabel": "Language",
+    "themeLabel": "Toggle theme"
+  },
+  "hero": {
+    "kicker": "Open to new opportunities · Lyon, France",
+    "role": "SRE / Cloud Architect",
+    "pitch": "20+ years across software development and infrastructure. I design and evolve robust, secure, high-performance cloud platforms, automate everything that can be automated, and keep critical systems resilient.",
+    "ctaContact": "Get in touch",
+    "ctaCv": "Download CV",
+    "stats": {
+      "years": "years of experience",
+      "projects": "featured projects",
+      "techs": "technologies"
+    }
+  },
+  "projects": {
+    "title": "Selected work",
+    "intro": "A selection of engagements: the context, what I did, and what it delivered.",
+    "problem": "Context",
+    "work": "What I did",
+    "result": "Outcome",
+    "link": "View project"
+  },
+  "stack": {
+    "title": "Tech stack",
+    "intro": "The tools I build and run platforms with."
+  },
+  "timeline": {
+    "title": "Experience",
+    "present": "present"
+  },
+  "contact": {
+    "title": "Let's work together",
+    "text": "A role, a question or a project? Message me on LinkedIn, I reply quickly.",
+    "footer": "Built with Astro, hosted on GitHub Pages.",
+    "linkedin": "Message me on LinkedIn"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page doesn't exist or has moved.",
+    "back": "Back to home"
+  }
+}

@@ -1,0 +1,89 @@
+---
+import { useTranslations, pick, type Lang } from '../i18n/utils';
+import { timeline } from '../data/timeline';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section" id="timeline">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">03 / {t.timeline.title}</span>
+      <h2>{t.timeline.title}</h2>
+    </div>
+    <ol>
+      {
+        timeline.map((e) => (
+          <li class="rv">
+            <span class="when">
+              {e.start} — {e.end ?? t.timeline.present}
+            </span>
+            <div>
+              <h3>{pick(lang, e.role)}</h3>
+              <p class="org">{e.org}</p>
+              <p class="sum">{pick(lang, e.summary)}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--line-2);
+  }
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 8px 32px;
+    padding: 0 0 40px 28px;
+  }
+  li:last-child {
+    padding-bottom: 0;
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  .org {
+    color: var(--accent);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .sum {
+    color: var(--muted);
+    margin-top: 8px;
+    max-width: 62ch;
+  }
+  @media (max-width: 640px) {
+    li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

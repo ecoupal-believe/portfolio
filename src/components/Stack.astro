@@ -1,0 +1,73 @@
+---
+import Tech from './Tech.astro';
+import { useTranslations, pick, type Lang } from '../i18n/utils';
+import { stack } from '../data/stack';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section" id="stack">
+  <div class="wrap">
+    <div class="section-head rv">
+      <span class="eyebrow">02 / {t.stack.title}</span>
+      <h2>{t.stack.title}</h2>
+      <p>{t.stack.intro}</p>
+    </div>
+    <div class="groups">
+      {
+        stack.map((g, i) => (
+          <div class="group rv" style={`--d:${i * 70}ms`}>
+            <h3>{pick(lang, g.label)}</h3>
+            <div class="items">
+              {g.items.map((s) => (
+                <Tech name={s} />
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .group {
+    background: var(--bg);
+    padding: 24px;
+  }
+  h3 {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .items :global(.chip) {
+    font-size: 13.5px;
+    padding: 7px 12px;
+    color: var(--fg);
+  }
+  .items :global(.chip svg) {
+    width: 16px;
+    height: 16px;
+  }
+</style>

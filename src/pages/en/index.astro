@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { getLang } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+---
+
+<Base>
+  <Home lang={lang} />
+</Base>

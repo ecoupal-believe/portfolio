@@ -1,0 +1,42 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languages, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  label: string;
+}
+const { lang, label } = Astro.props;
+const locales = Object.keys(languages) as Lang[];
+---
+
+<nav class="lang" aria-label={label}>
+  {
+    locales.map((l) => (
+      <a href={getRelativeLocaleUrl(l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined} title={languages[l]}>
+        {l.toUpperCase()}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .lang {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+  }
+  a {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  a[aria-current] {
+    background: var(--fg);
+    color: var(--bg);
+  }
+</style>

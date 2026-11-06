@@ -1,0 +1,23 @@
+---
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Projects from './Projects.astro';
+import Stack from './Stack.astro';
+import Timeline from './Timeline.astro';
+import Contact from './Contact.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<Header lang={lang} />
+<main id="main">
+  <Hero lang={lang} />
+  <Projects lang={lang} />
+  <Stack lang={lang} />
+  <Timeline lang={lang} />
+  <Contact lang={lang} />
+</main>

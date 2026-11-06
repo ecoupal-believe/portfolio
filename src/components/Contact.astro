@@ -1,0 +1,97 @@
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+import { profile } from '../data/profile';
+import { getIcon } from '../lib/icons';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const github = getIcon('github');
+const year = new Date().getFullYear();
+---
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="box rv">
+      <span class="eyebrow">04 / {t.nav.contact}</span>
+      <h2>{t.contact.title}</h2>
+      <p>{t.contact.text}</p>
+      <div class="actions">
+        {profile.email && (
+          <a class="btn" href={`mailto:${profile.email}`}>{profile.email}</a>
+        )}
+        {
+          profile.links.linkedin && (
+            <a class="btn btn-primary" href={profile.links.linkedin} target="_blank" rel="noopener">
+              {t.contact.linkedin} ↗
+            </a>
+          )
+        }
+        {
+          profile.links.github && (
+            <a class="btn" href={profile.links.github} target="_blank" rel="noopener">
+              {github && (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d={github.path} />
+                </svg>
+              )}
+              GitHub ↗
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="wrap foot">
+  <span>© {year} {profile.name}</span>
+  <span>{t.contact.footer}</span>
+</footer>
+
+<style>
+  .box {
+    display: grid;
+    gap: 16px;
+    padding: clamp(28px, 6vw, 64px);
+    border-radius: calc(var(--radius) + 6px);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(120% 140% at 100% 0%, var(--accent-soft), transparent 60%),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+  h2 {
+    font-size: clamp(32px, 6vw, 56px);
+  }
+  p {
+    color: var(--muted);
+    max-width: 52ch;
+    font-size: 17px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .actions svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+  .btn-primary {
+    overflow-wrap: anywhere;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 8px;
+    padding-bottom: 40px;
+    font-size: 13.5px;
+    color: var(--faint);
+  }
+</style>
